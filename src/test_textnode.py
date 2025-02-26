@@ -2,6 +2,7 @@ import unittest
 
 from textnode import TextNode, TextType
 
+from htmlnode import HTMLNode
 
 class TestTextNode(unittest.TestCase):
     def test_eq(self):
@@ -30,6 +31,17 @@ class TestTextNode(unittest.TestCase):
             "TextNode(This is a text node, text, https://www.boot.dev)", repr(node)
         )
 
+        # Test case 1: No props
+        node = HTMLNode(props=None)
+        print(node.props_to_html())  # Expected output: ""
+
+        # Test case 2: Single prop
+        node = HTMLNode(props={"href": "https://www.example.com"})
+        print(node.props_to_html())  # Expected output: ' href="https://www.example.com"'
+
+        # Test case 3: Multiple props
+        node = HTMLNode(props={"href": "https://www.google.com", "target": "_blank"})
+        print(node.props_to_html())  # Expected output: ' href="https://www.google.com" target="_blank"'
 
 if __name__ == "__main__":
     unittest.main()
