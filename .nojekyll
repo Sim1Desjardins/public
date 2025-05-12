@@ -1,0 +1,7 @@
+# Create an empty .nojekyll file
+touch .nojekyll
+
+# Commit and push
+git add .nojekyll
+git commit -m "Disable Jekyll processing"
+git push
