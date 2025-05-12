@@ -4,11 +4,10 @@ from pathlib import Path
 from markdown_blocks import markdown_to_html_node
 
 
-basepath = "/" 
-if len(sys.argv) > 1:
-    basepath = sys.argv[1]
-
 def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, basepath):
+    if len(sys.argv) > 1:
+        basepath = sys.argv[1]
+    
     for filename in os.listdir(dir_path_content):
         from_path = os.path.join(dir_path_content, filename)
         dest_path = os.path.join(dest_dir_path, filename)
@@ -36,9 +35,11 @@ def generate_page(from_path, template_path, dest_path, basepath):
     template = template.replace("{{ Title }}", title)
     template = template.replace("{{ Content }}", html)
 
-    # After you've replaced Title and Content in your HTML
-    html = html.replace('href="/', f'href="{basepath}')
-    html = html.replace('src="/', f'src="{basepath}')
+# Replace relative URLs with basepathed URLs
+    template = template.replace('href="/', f'href="{basepath}')
+    template = template.replace('src="/', f'src="{basepath}')
+
+# Then write the template to file
 
     dest_dir_path = os.path.dirname(dest_path)
     if dest_dir_path != "":
